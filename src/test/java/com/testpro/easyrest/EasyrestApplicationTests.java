@@ -27,12 +27,10 @@ public class EasyrestApplicationTests extends AbstractTestNGSpringContextTests {
         return interfaceDataProvider.ImplementDataProvider();
     }
 
-
     @Test(testName = "esayrestTests", dataProvider = "getdata")
     @Step("测试用例名称：{excelData.caseDescription}")
     public void contextLoads(ExcelData excelData) {
         interfaceExecution.execution(excelData);
-
     }
 
 }

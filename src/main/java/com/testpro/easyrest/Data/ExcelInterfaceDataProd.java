@@ -32,9 +32,8 @@ public class ExcelInterfaceDataProd extends AbstractExcelInterfaceData implement
         ExcelUtil excelUtil = new ExcelUtil();
         List <ExcelData> excelDataList = excelUtil.readExcelReturnListBean(file, ExcelData.class);
 
-        for (ExcelData data : excelDataList) {
+        for (ExcelData data : excelDataList)
             excelData.add((Object) data);
-        }
         objectList = TestNgUtil.createObjectList(excelData);
     }
 
