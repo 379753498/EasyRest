@@ -1,7 +1,9 @@
 package com.testpro.easyrest;
 
+import com.testpro.easyrest.Core.interfaceExecution;
 import com.testpro.easyrest.Data.InterfaceDataProvider;
 import com.testpro.easyrest.baen.ExcelData;
+import io.qameta.allure.Step;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -16,6 +18,8 @@ public class EasyrestApplicationTests extends AbstractTestNGSpringContextTests {
 
     @Autowired
     InterfaceDataProvider interfaceDataProvider;
+    @Autowired
+    interfaceExecution interfaceExecution;
 
     @DataProvider(name = "getdata")
     public Iterator <Object[]> getdata() {
@@ -23,12 +27,10 @@ public class EasyrestApplicationTests extends AbstractTestNGSpringContextTests {
     }
 
 
-    @Test(testName = "请求天气数据json", dataProvider = "getdata")
+    @Test(testName = "esayrestTests", dataProvider = "getdata")
+    @Step
     public void contextLoads(ExcelData excelData) {
-//        Iterator <Object[]> iterator = interfaceDataProvider.ImplementDataProvider();
-//        DataType dataType = interfaceDataProvider.DatasourceName();
-        System.out.println(excelData);
-
+        interfaceExecution.execution(excelData);
 
     }
 
