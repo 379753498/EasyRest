@@ -2,7 +2,7 @@ package com.testpro.easyrest.Data;
 
 import com.testpro.easyrest.Util.ExcelUtil;
 import com.testpro.easyrest.Util.TestNgUtil;
-import com.testpro.easyrest.baen.ExcelData;
+import com.testpro.easyrest.bean.ExcelData;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;

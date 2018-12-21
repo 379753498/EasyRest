@@ -1,6 +1,6 @@
 package com.testpro.easyrest.Core;
 
-import com.testpro.easyrest.baen.ExcelData;
+import com.testpro.easyrest.bean.ExcelData;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 

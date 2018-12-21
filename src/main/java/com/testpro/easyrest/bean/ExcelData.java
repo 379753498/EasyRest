@@ -1,4 +1,4 @@
-package com.testpro.easyrest.baen;
+package com.testpro.easyrest.bean;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.metadata.BaseRowModel;
