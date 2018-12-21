@@ -6,7 +6,7 @@ easyrest 是一个由数据驱动自动化接口测试框架，
 
 
 #### 软件架构
-软件架构说明
+软件架构说明 
 ![架构图](https://images.gitee.com/uploads/images/2018/1222/005032_565f5cfc_963880.png "core.png")
 
 
