@@ -1,8 +1,8 @@
 package com.testpro.easyrest;
 
-import com.testpro.easyrest.Core.interfaceExecution;
-import com.testpro.easyrest.Data.InterfaceDataProvider;
-import com.testpro.easyrest.bean.ExcelData;
+import com.testpro.easyrest.Core.Interface.interfaceExecution;
+import com.testpro.easyrest.Core.Interface.InterfaceDataProvider;
+import com.testpro.easyrest.bean.ExecutionData;
 import io.qameta.allure.Step;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,9 +28,9 @@ public class EasyrestApplicationTests extends AbstractTestNGSpringContextTests {
     }
 
     @Test(testName = "esayrestTests", dataProvider = "getdata")
-    @Step("测试用例名称：{excelData.caseDescription}")
-    public void contextLoads(ExcelData excelData) {
-        interfaceExecution.execution(excelData);
+    @Step("测试用例名称：{executionData.caseDescription}")
+    public void contextLoads(ExecutionData executionData) {
+        interfaceExecution.execution(executionData);
     }
 
 }

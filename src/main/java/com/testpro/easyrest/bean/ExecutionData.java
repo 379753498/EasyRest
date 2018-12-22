@@ -9,7 +9,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ExcelData extends BaseRowModel {
+public class ExecutionData extends BaseRowModel {
 
     @ExcelProperty(index = 0, value = "用例名称")
     private String caseName;
