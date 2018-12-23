@@ -8,7 +8,6 @@ import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.Map;
 
 @Slf4j
@@ -19,8 +18,12 @@ public class ResponseExecutImp extends AbctractResponseExecut {
 
     @Override
     protected Response UrlHeadParam(ExecutionData executionData) {
-        Map headers = null;
-        Map Parameters = null;
+
+
+
+
+        Map headers ;
+        Map Parameters ;
         try {
             headers = JsonUtil.FastStringtoMap(executionData.getHeaders());
             Parameters = JsonUtil.FastStringtoMap(executionData.getParameters());
@@ -44,7 +47,7 @@ public class ResponseExecutImp extends AbctractResponseExecut {
     @Override
     protected Response UrlParam(ExecutionData executionData) {
 
-        Map Parameters = null;
+        Map Parameters ;
         try {
             Parameters = JsonUtil.FastStringtoMap(executionData.getParameters());
         } catch (Exception e) {
@@ -66,7 +69,7 @@ public class ResponseExecutImp extends AbctractResponseExecut {
     @Override
     protected Response UrlHead(ExecutionData executionData) {
 
-        Map headers = null;
+        Map headers;
         try {
             headers = JsonUtil.FastStringtoMap(executionData.getHeaders());
         } catch (Exception e) {

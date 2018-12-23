@@ -7,8 +7,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.testpro.easyrest.bean.Result;
-
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -211,6 +209,26 @@ public class JsonUtil {
         }
         return map;
     }
-
-
+    public static String JsonArraygood(String assertResult) {
+        JSONArray parse = (JSONArray)JSONArray.parse(assertResult);
+        StringBuffer stringBuffer= new StringBuffer();
+        stringBuffer.append("[");
+        Object[] objects = parse.toArray();
+        for (int i=0;i<objects.length;i++)
+        {
+            if(i==objects.length-1)
+            {
+                stringBuffer.append(JsonPretty(objects[i].toString()));
+            }
+            else {
+                stringBuffer.append(JsonPretty(objects[i].toString())).append(","+"\n");
+            }
+        }
+        stringBuffer.append("]");
+        return stringBuffer.toString();
+    }
+    public static String JsonPretty(String requestInfo) {
+        JSONObject jsonObject = JSONObject.parseObject(requestInfo);
+        return JSONObject.toJSONString(jsonObject,true);
+    }
 }
