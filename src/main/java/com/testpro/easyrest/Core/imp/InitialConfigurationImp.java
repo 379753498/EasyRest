@@ -20,7 +20,7 @@ public class InitialConfigurationImp implements InitialConfiguration {
     @Override
     public void InitialConfiguration() {
         if (easyrestConfig.getBaseurl().equals("")) {
-            log.warn("默认url没有填写请务必在URL中填写全部URL 否则会出现错误");
+//            log.warn("默认url没有填写请务必在URL中填写全部URL 否则会出现错误");
         } else {
             assuredUtil.setBaseurl(easyrestConfig.getBaseurl());
         }

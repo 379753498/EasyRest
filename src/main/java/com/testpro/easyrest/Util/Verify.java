@@ -13,17 +13,39 @@ public class Verify {
         } catch (Error e) {
             verificationErrors.append(e.toString());
             setStrbuffer(verificationErrors);
+            verificationErrors.setLength(0);
         }
     }
 
+    /**
+     *   当遇到异常信息把异常信息存起来
+     * @param verificationErrors 异常信息
+     */
     private static void setStrbuffer(StringBuffer verificationErrors) {
+        String sb1 = verificationErrors.toString();
         if (threadLocal.get() != null) {
             StringBuffer stringBuffer = threadLocal.get();
-            stringBuffer.append(verificationErrors.toString());
+            strbufferprint(sb1, stringBuffer);
             threadLocal.set(stringBuffer);
         } else {
-            threadLocal.set(verificationErrors);
+            StringBuffer stringBuffer = new StringBuffer();
+            strbufferprint(sb1, stringBuffer);
+            threadLocal.set(stringBuffer);
         }
+    }
+
+    /**
+     * 美化一下异常信息的展示 更可读
+     *
+     * @param sb1
+     * @param stringBuffer
+     */
+    private static void strbufferprint(String sb1, StringBuffer stringBuffer) {
+
+        stringBuffer.append("\n");
+        stringBuffer.append("{-----");
+        stringBuffer.append(sb1);
+        stringBuffer.append("-----}");
     }
 
     public static void verifyFalse(boolean o) {
@@ -32,6 +54,7 @@ public class Verify {
         } catch (Error e) {
             verificationErrors.append(e.toString());
             setStrbuffer(verificationErrors);
+            verificationErrors.setLength(0);
         }
     }
 
@@ -41,6 +64,7 @@ public class Verify {
         } catch (Error e) {
             verificationErrors.append(e.toString());
             setStrbuffer(verificationErrors);
+            verificationErrors.setLength(0);
         }
     }
 
@@ -51,6 +75,7 @@ public class Verify {
         } catch (Error e) {
             verificationErrors.append(e.toString());
             setStrbuffer(verificationErrors);
+            verificationErrors.setLength(0);
         }
     }
 
@@ -61,6 +86,7 @@ public class Verify {
         } catch (Error e) {
             verificationErrors.append(e.toString());
             setStrbuffer(verificationErrors);
+            verificationErrors.setLength(0);
         }
     }
 
@@ -70,9 +96,13 @@ public class Verify {
         } catch (Error e) {
             verificationErrors.append(e.toString());
             setStrbuffer(verificationErrors);
+            verificationErrors.setLength(0);
         }
     }
 
+    /**
+     * 用例结束之前调用如果有异常就阻断 没有异常就pass
+     */
     public static void tearDown() {
 //        异常信息
         String verificationErrorString = null;
@@ -81,7 +111,6 @@ public class Verify {
             verificationErrorString = threadLocal.get().toString();
         }
         if (!"".equals(verificationErrorString) && verificationErrorString != null) {
-            verificationErrors.setLength(0);
             threadLocal.remove();
             Assert.fail(verificationErrorString);
         }
@@ -94,6 +123,7 @@ public class Verify {
         } catch (Error e) {
             verificationErrors.append(e.toString());
             setStrbuffer(verificationErrors);
+            verificationErrors.setLength(0);
         }
     }
 }
