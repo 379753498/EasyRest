@@ -2,7 +2,6 @@ package com.testpro.easyrest;
 
 import com.testpro.easyrest.Core.Interface.InterfaceDataProvider;
 import com.testpro.easyrest.Core.Interface.interfaceExecution;
-import com.testpro.easyrest.Util.Verify;
 import com.testpro.easyrest.bean.ExecutionData;
 import io.qameta.allure.Step;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.testng.annotations.Test;
 import java.util.Iterator;
 
 @SpringBootTest
-//@Listeners({ListenerVerify.class})
 public class EasyrestApplicationTests extends AbstractTestNGSpringContextTests {
 
     //数据发动机
@@ -33,8 +31,6 @@ public class EasyrestApplicationTests extends AbstractTestNGSpringContextTests {
     @Step("测试用例名称：{executionData.caseDescription}")
     public void contextLoads(ExecutionData executionData) {
         interfaceExecution.execution(executionData);
-       //收集验证结果
-        Verify.tearDown();
     }
 
 }

@@ -7,10 +7,12 @@ import com.testpro.easyrest.Core.Interface.Verification;
 import com.testpro.easyrest.Core.Interface.interfaceExecution;
 import com.testpro.easyrest.Util.JsonUtil;
 import com.testpro.easyrest.Util.ReportDetil;
+import com.testpro.easyrest.Util.Verify;
 import com.testpro.easyrest.bean.ExecutionData;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -31,22 +33,16 @@ public class RestAssuredImp implements interfaceExecution {
 
     @Override
     public void execution(ExecutionData executionData) {
-        // 面向过程语言 增加测试Detil
-        // 请求URL：xxx
-        //  请求头参数：
-        //
 
-        ReportDetil.requestBody(rquestbodyData(executionData));
-
-        initialConfiguration.InitialConfiguration();
-
-        Response response = responseExecut.execut(executionData);
-//      如果预期结果是json则展示在报告中
-        if (executionData.getRetruntype().equals("json")) {
+        ReportDetil.requestBody(rquestbodyData(executionData));//设置测试报告的参数列表
+        initialConfiguration.InitialConfiguration();//初始化配置并进行设置
+        Response response = responseExecut.execut(executionData);//执行请求并拿到返回值
+        if (executionData.getRetruntype().equals("json")) {//      如果预期结果是json则展示在报告中
             ReportDetil.respondBody(response.asString());
         }
+        verification.executVerification(response, executionData);//执行验证参数功能
+        Verify.tearDown();//统一异常处理收集
 
-        verification.executVerification(response, executionData);
     }
 
     private String rquestbodyData(ExecutionData executionData) {
@@ -58,7 +54,7 @@ public class RestAssuredImp implements interfaceExecution {
         String url = executionData.getUrl();
         stringMap.put("URL", url);
         stringMap.put("Method", method);
-        if (parameters != null) {
+        if (StringUtils.isEmpty(parameters)) {
             stringMap.put("参数列表", JsonUtil.FastStringtoMap(parameters));
         } else {
             Map map = new HashMap();
