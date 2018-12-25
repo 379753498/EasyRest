@@ -33,7 +33,7 @@ public class ResponseExecutImp extends AbctractResponseExecut {
         }
         if (executionData.getMethod().equals("get")) {
             Response response = assuredUtil.GetResponse(executionData.getUrl(), Parameters, headers);
-            log.info(response.asString());
+
             return response;
         } else if (executionData.getMethod().equals("post")) {
             return assuredUtil.PostResponse(executionData.getUrl(), Parameters, headers);
