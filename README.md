@@ -4,6 +4,7 @@
 
 easyrest 是一个由数据驱动自动化接口测试框架，
 可以自动执行并生成报告。
+自动化测试技术交流QQ群：31043004
 #### 测试报告效果
 ![报告效果图1](https://images.gitee.com/uploads/images/2018/1223/205752_f9b01490_963880.png "ps1.png")
 ![报告效果图2](https://images.gitee.com/uploads/images/2018/1223/205828_71952b83_963880.png "ps2.png")
