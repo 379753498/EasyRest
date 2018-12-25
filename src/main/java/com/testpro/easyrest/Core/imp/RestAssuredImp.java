@@ -54,7 +54,7 @@ public class RestAssuredImp implements interfaceExecution {
         String url = executionData.getUrl();
         stringMap.put("URL", url);
         stringMap.put("Method", method);
-        if (StringUtils.isEmpty(parameters)) {
+        if (!StringUtils.isEmpty(parameters)) {
             stringMap.put("参数列表", JsonUtil.FastStringtoMap(parameters));
         } else {
             Map map = new HashMap();
