@@ -37,6 +37,7 @@ public class RestAssuredImp implements interfaceExecution {
         ReportDetil.requestBody(rquestbodyData(executionData));//设置测试报告的参数列表
         initialConfiguration.InitialConfiguration();//初始化配置并进行设置
         Response response = responseExecut.execut(executionData);//执行请求并拿到返回值
+        log.info(response.asString());
         if (executionData.getRetruntype().equals("json")) {//      如果预期结果是json则展示在报告中
             ReportDetil.respondBody(response.asString());
         }
