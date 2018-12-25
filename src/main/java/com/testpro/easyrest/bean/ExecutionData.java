@@ -27,7 +27,7 @@ public class ExecutionData extends BaseRowModel {
     private String retruntype;
     @ExcelProperty(index = 7, value = "返回值校验")
     private String retrunvauleCheck;
-    @ExcelProperty(index = 8, value = "josnPath校验")
+    @ExcelProperty(index = 8, value = "jsonPath校验")
     private String retrunJsonPathCheck;
     @ExcelProperty(index = 9, value = "字符包含校验")
     private String retrunCharacterString;
