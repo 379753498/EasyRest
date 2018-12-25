@@ -45,7 +45,7 @@ easyrest 是一个由数据驱动自动化接口测试框架，
    - 方法：{字符串、暂只支持get/post，必填项}
    - 返回值类型:{字符串、json，必填项}
    - 返回值校验:{Json字符串、无长度限制，非必填项}
-   - josnPath校验：{Json字符串、无长度限制，非必填项}
+   - jsonPath校验：{Json字符串、无长度限制，非必填项}
 
     此处Key需满足jsonpath语法 https://testerhome.com/topics/6672
 
