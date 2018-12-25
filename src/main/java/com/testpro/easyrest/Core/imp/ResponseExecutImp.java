@@ -56,7 +56,6 @@ public class ResponseExecutImp extends AbctractResponseExecut {
         }
         if (executionData.getMethod().equals("get")) {
             Response response = assuredUtil.GetResponseparameters(executionData.getUrl(), Parameters);
-            log.info(response.asString());
             return response;
         } else if (executionData.getMethod().equals("post")) {
             return assuredUtil.PostResponseparameters(executionData.getUrl(), Parameters);
@@ -79,7 +78,6 @@ public class ResponseExecutImp extends AbctractResponseExecut {
         }
         if (executionData.getMethod().equals("get")) {
             Response response = assuredUtil.GetResponseheards(executionData.getUrl(), headers);
-            log.info(response.asString());
             return response;
         } else if (executionData.getMethod().equals("post")) {
             return assuredUtil.PostResponseheards(executionData.getUrl(), headers);
@@ -96,7 +94,6 @@ public class ResponseExecutImp extends AbctractResponseExecut {
             {
                 if (executionData.getMethod().equals("get")) {
                     Response response = assuredUtil.GetResponse(executionData.getUrl());
-                    log.info(response.asString());
                     return response;
                 } else if (executionData.getMethod().equals("post")) {
                     return assuredUtil.PostResponse(executionData.getUrl());
