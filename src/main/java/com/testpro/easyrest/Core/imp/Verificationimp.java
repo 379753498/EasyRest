@@ -12,6 +12,7 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+
 import java.util.*;
 
 
@@ -20,7 +21,7 @@ import java.util.*;
 public class Verificationimp extends AbstractVerification {
     @Override
     protected void ResponsevauleCheck(Response response, ExecutionData executionData) {
-        HashMap<String, Object> map = new HashMap<>();
+        HashMap <String, Object> map = new HashMap <>();
         String asString = response.asString();
         if (executionData.getRetruntype() != null && executionData.getRetruntype().equals("json")) {
             Gson gson1 = new GsonBuilder().create();//or new Gson()
@@ -53,7 +54,7 @@ public class Verificationimp extends AbstractVerification {
     protected void ResponseJsonPathCheck(Response response, ExecutionData executionData) {
 
         JsonPath jsonPath = response.jsonPath();
-        List<HashMap<String, Object>> list = new ArrayList<>();
+        List <HashMap <String, Object>> list = new ArrayList <>();
         String retrunJsonPathCheck = executionData.getRetrunJsonPathCheck();
         Map map = JsonUtil.FastStringtoMap(retrunJsonPathCheck);
         if (!map.isEmpty()) {
@@ -62,16 +63,16 @@ public class Verificationimp extends AbstractVerification {
                 final String key = (String) obj;
                 final String vaule = (String) map.get(obj);
                 // 此处不存在有解析错误的可能性 所有的解析错误都判断接口返回值错误 默认以JSonPath 解析结果为准
-                String jsonpathvalue = jsonPath.get(key).toString();
-                HashMap<String, Object> objectHashMap = new HashMap<>();
-                boolean equals = vaule.equals(jsonpathvalue);
+                String JsonPathValue = jsonPath.get(key).toString();
+                HashMap <String, Object> objectHashMap = new HashMap <>();
+                boolean equals = vaule.equals(JsonPathValue);
                 objectHashMap.put("JsonPath", key);
                 objectHashMap.put("预期值", vaule);
-                objectHashMap.put("实际值", jsonpathvalue);
-                objectHashMap.put("校验结果", equals == true ? "true" : "false");
+                objectHashMap.put("实际值", JsonPathValue);
+                objectHashMap.put("校验结果", equals ? "true" : "false");
                 list.add(objectHashMap);
                 try {
-                    Verify.assertEquals(vaule, jsonpathvalue);
+                    Verify.assertEquals(vaule, JsonPathValue);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -88,17 +89,17 @@ public class Verificationimp extends AbstractVerification {
     protected void ResponseCharacterString(Response response, ExecutionData executionData) {
         String asString = response.asString();
         String RetrunCharacterString = executionData.getRetrunCharacterString();
-        List<HashMap<String, Object>> list = new ArrayList<>();
-        HashMap<String, Object> map = new HashMap<>();
+        List <HashMap <String, Object>> list = new ArrayList <>();
+        HashMap <String, Object> map = new HashMap <>();
 
         try {
             String[] split = RetrunCharacterString.split(",");
             for (String str : split) {
                 boolean contains = asString.contains(str);
                 map.put("期望包含字符串", str);
-                map.put("是否包含", contains == true ? "true" : "false");
+                map.put("是否包含", contains ? "true" : "false");
                 list.add(map);
-                map = new HashMap<>();
+                map = new HashMap <>();
                 try {
                     Verify.assertTrue(asString.contains(str));
                 } catch (Exception e) {

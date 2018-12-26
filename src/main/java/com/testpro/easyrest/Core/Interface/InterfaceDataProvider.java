@@ -4,11 +4,14 @@ import com.testpro.easyrest.Enum.DataType;
 
 import java.util.Iterator;
 
+/**
+ * @param <T> 期望返回的数据类型
+ */
 
-public interface InterfaceDataProvider {
+public interface InterfaceDataProvider<T> {
 
 
-    Iterator <Object[]> ImplementDataProvider() ;
+    Iterator <T[]> ImplementDataProvider();
 
 
     DataType DatasourceName();

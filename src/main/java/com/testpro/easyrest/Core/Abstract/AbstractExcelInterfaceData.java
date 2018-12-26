@@ -5,7 +5,9 @@ import com.testpro.easyrest.Enum.DataType;
 
 import java.util.Iterator;
 
-public  abstract  class AbstractExcelInterfaceData implements InterfaceDataProvider {
+public abstract class AbstractExcelInterfaceData implements InterfaceDataProvider <Object> {
+
+    private String filepath;
 
     public String getFilepath() {
         return filepath;
@@ -15,21 +17,18 @@ public  abstract  class AbstractExcelInterfaceData implements InterfaceDataProvi
         this.filepath = filepath;
     }
 
-    private String filepath;
-
-
     @Override
     public DataType DatasourceName() {
         return DataType.Excel;
     }
+
     @Override
-    public Iterator<Object[]> ImplementDataProvider(){
+    public Iterator <Object[]> ImplementDataProvider() {
         return impDataProvider();
-     }
+    }
 
     /**
-     *
      * @return 回调函数由子类实现
      */
-    protected abstract  Iterator<Object[]> impDataProvider();
+    protected abstract Iterator <Object[]> impDataProvider();
 }

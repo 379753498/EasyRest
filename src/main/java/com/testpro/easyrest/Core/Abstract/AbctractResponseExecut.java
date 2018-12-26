@@ -6,7 +6,7 @@ import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public abstract class AbctractResponseExecut implements ResponseExecut {
+public abstract class AbctractResponseExecut implements ResponseExecut <Response, ExecutionData> {
     @Override
     public Response execut(ExecutionData executionData) {
         if (executionData.getUrl() == null) {
@@ -48,8 +48,11 @@ public abstract class AbctractResponseExecut implements ResponseExecut {
     }
 
     protected abstract Response UrlHeadParam(ExecutionData executionData);
+
     protected abstract Response UrlParam(ExecutionData executionData);
+
     protected abstract Response UrlHead(ExecutionData executionData);
+
     protected abstract Response Url(ExecutionData executionData);
 
 }

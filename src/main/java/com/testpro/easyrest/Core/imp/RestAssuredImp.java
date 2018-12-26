@@ -27,9 +27,9 @@ public class RestAssuredImp implements interfaceExecution {
     private InitialConfiguration initialConfiguration;
 
     @Resource
-    private ResponseExecut responseExecut;
+    private ResponseExecut <Response, ExecutionData> responseExecut;
     @Resource
-    private Verification verification;
+    private Verification <Response, ExecutionData> verification;
 
     @Override
     public void execution(ExecutionData executionData) {

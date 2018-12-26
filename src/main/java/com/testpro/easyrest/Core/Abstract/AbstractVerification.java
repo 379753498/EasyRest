@@ -4,7 +4,7 @@ import com.testpro.easyrest.Core.Interface.Verification;
 import com.testpro.easyrest.bean.ExecutionData;
 import io.restassured.response.Response;
 
-public abstract class AbstractVerification implements Verification {
+public abstract class AbstractVerification implements Verification <Response, ExecutionData> {
     @Override
     public void executVerification(Response response, ExecutionData executionData) {
 
@@ -12,10 +12,10 @@ public abstract class AbstractVerification implements Verification {
             ResponsevauleCheck(response, executionData);
         }
         if (executionData.getRetrunJsonPathCheck() != null && executionData.getRetruntype() != null && executionData.getRetruntype().equals("json")) {
-            ResponseJsonPathCheck(response,executionData);
+            ResponseJsonPathCheck(response, executionData);
         }
         if (executionData.getRetrunCharacterString() != null) {
-            ResponseCharacterString(response,executionData);
+            ResponseCharacterString(response, executionData);
         }
 
     }

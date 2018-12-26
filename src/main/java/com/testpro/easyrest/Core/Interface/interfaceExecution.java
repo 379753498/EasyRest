@@ -2,7 +2,10 @@ package com.testpro.easyrest.Core.Interface;
 
 import com.testpro.easyrest.bean.ExecutionData;
 
-public interface interfaceExecution {
+/**
+ * @param <E>期望执行的数据类型
+ */
+public interface interfaceExecution<E extends ExecutionData> {
 
-    void execution(ExecutionData executionData);
+    void execution(E executionData);
 }
