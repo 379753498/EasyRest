@@ -44,7 +44,7 @@ public class RestAssuredImp extends AbctractRestAssuredExecut {
         if (executionData.getRetruntype().equals("json")) {//如果预期结果是json则展示在报告中
             ReportDetil.respondBody(response.asString());
         }
-        super.executVerification(response, executionData);//执行验证参数功能
+        super.ExecutVerification(response, executionData);//执行验证参数功能
         Verify.tearDown();//统一异常处理收集
 
     }
@@ -77,7 +77,7 @@ public class RestAssuredImp extends AbctractRestAssuredExecut {
     }
 
     @Override
-    protected Response UrlHeadParam(ExecutionData executionData) {
+    public Response UrlHeadParam(ExecutionData executionData) {
 
 
         Map headers;
@@ -89,21 +89,20 @@ public class RestAssuredImp extends AbctractRestAssuredExecut {
             log.error(e.toString());
             throw new RuntimeException("参数解析异常请核对后在播");
         }
-        if (executionData.getMethod().equals("get")) {
-            Response response = assuredUtil.GetResponse(executionData.getUrl(), Parameters, headers);
-
-            return response;
-        } else if (executionData.getMethod().equals("post")) {
-            return assuredUtil.PostResponse(executionData.getUrl(), Parameters, headers);
-        } else {
-            log.error("框架暂时不支持 post get 之外其他请求");
-            throw new RuntimeException("框架暂时不支持 post get 之外其他请求");
+        switch (executionData.getMethod()) {
+            case "get":
+                return assuredUtil.GetResponse(executionData.getUrl(), Parameters, headers);
+            case "post":
+                return assuredUtil.PostResponse(executionData.getUrl(), Parameters, headers);
+            default:
+                log.error("框架暂时不支持 post get 之外其他请求");
+                throw new RuntimeException("框架暂时不支持 post get 之外其他请求");
         }
 
     }
 
     @Override
-    protected Response UrlParam(ExecutionData executionData) {
+    public Response UrlParam(ExecutionData executionData) {
 
         Map Parameters;
         try {
@@ -112,19 +111,19 @@ public class RestAssuredImp extends AbctractRestAssuredExecut {
             log.error(e.toString());
             throw new RuntimeException("参数解析异常请核对后在播");
         }
-        if (executionData.getMethod().equals("get")) {
-            Response response = assuredUtil.GetResponseparameters(executionData.getUrl(), Parameters);
-            return response;
-        } else if (executionData.getMethod().equals("post")) {
-            return assuredUtil.PostResponseparameters(executionData.getUrl(), Parameters);
-        } else {
-            log.error("框架暂时不支持 post get 之外其他请求");
-            throw new RuntimeException("框架暂时不支持 post get 之外其他请求");
+        switch (executionData.getMethod()) {
+            case "get":
+                return assuredUtil.GetResponseparameters(executionData.getUrl(), Parameters);
+            case "post":
+                return assuredUtil.PostResponseparameters(executionData.getUrl(), Parameters);
+            default:
+                log.error("框架暂时不支持 post get 之外其他请求");
+                throw new RuntimeException("框架暂时不支持 post get 之外其他请求");
         }
     }
 
     @Override
-    protected Response UrlHead(ExecutionData executionData) {
+    public Response UrlHead(ExecutionData executionData) {
 
         Map headers;
         try {
@@ -134,30 +133,30 @@ public class RestAssuredImp extends AbctractRestAssuredExecut {
             log.error("参数解析异常请核对后在播");
             throw new RuntimeException("参数解析异常请核对后在播");
         }
-        if (executionData.getMethod().equals("get")) {
-            Response response = assuredUtil.GetResponseheards(executionData.getUrl(), headers);
-            return response;
-        } else if (executionData.getMethod().equals("post")) {
-            return assuredUtil.PostResponseheards(executionData.getUrl(), headers);
+        switch (executionData.getMethod()) {
+            case "get":
+                return assuredUtil.GetResponseheards(executionData.getUrl(), headers);
+            case "post":
+                return assuredUtil.PostResponseheards(executionData.getUrl(), headers);
 
-        } else {
-            log.error("框架暂时不支持 post get 之外其他请求");
-            throw new RuntimeException("框架暂时不支持 post get 之外其他请求");
+            default:
+                log.error("框架暂时不支持 post get 之外其他请求");
+                throw new RuntimeException("框架暂时不支持 post get 之外其他请求");
         }
     }
 
     @Override
-    protected Response Url(ExecutionData executionData) {
+    public Response Url(ExecutionData executionData) {
         if (executionData.getMethod() != null) {
             {
-                if (executionData.getMethod().equals("get")) {
-                    Response response = assuredUtil.GetResponse(executionData.getUrl());
-                    return response;
-                } else if (executionData.getMethod().equals("post")) {
-                    return assuredUtil.PostResponse(executionData.getUrl());
-                } else {
-                    log.error("框架暂时不支持 post get 之外其他请求");
-                    throw new RuntimeException("框架暂时不支持 post get 之外其他请求");
+                switch (executionData.getMethod()) {
+                    case "get":
+                        return assuredUtil.GetResponse(executionData.getUrl());
+                    case "post":
+                        return assuredUtil.PostResponse(executionData.getUrl());
+                    default:
+                        log.error("框架暂时不支持 post get 之外其他请求");
+                        throw new RuntimeException("框架暂时不支持 post get 之外其他请求");
                 }
             }
         } else {
@@ -167,7 +166,7 @@ public class RestAssuredImp extends AbctractRestAssuredExecut {
     }
 
     @Override
-    protected void ResponsevauleCheck(Response response, ExecutionData executionData) {
+    public void ResponseVauleCheck(Response response, ExecutionData executionData) {
         HashMap <String, Object> map = new HashMap <>();
         String asString = response.asString();
         if (executionData.getRetruntype() != null && executionData.getRetruntype().equals("json")) {
@@ -198,7 +197,7 @@ public class RestAssuredImp extends AbctractRestAssuredExecut {
     }
 
     @Override
-    protected void ResponseJsonPathCheck(Response response, ExecutionData executionData) {
+    public void ResponseJsonPathCheck(Response response, ExecutionData executionData) {
 
         JsonPath jsonPath = response.jsonPath();
         List <HashMap <String, Object>> list = new ArrayList <>();
@@ -233,7 +232,7 @@ public class RestAssuredImp extends AbctractRestAssuredExecut {
     }
 
     @Override
-    protected void ResponseCharacterString(Response response, ExecutionData executionData) {
+    public void ResponseCharacterString(Response response, ExecutionData executionData) {
         String asString = response.asString();
         String RetrunCharacterString = executionData.getRetrunCharacterString();
         List <HashMap <String, Object>> list = new ArrayList <>();
@@ -258,5 +257,6 @@ public class RestAssuredImp extends AbctractRestAssuredExecut {
             log.error(e.toString());
         }
     }
+
 
 }
