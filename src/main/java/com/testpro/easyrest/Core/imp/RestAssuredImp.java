@@ -4,7 +4,7 @@ package com.testpro.easyrest.Core.imp;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
-import com.testpro.easyrest.Core.Abstract.AbctractRestAssuredExecut;
+import com.testpro.easyrest.Core.Abstract.AbctractRestAssuredExecute;
 import com.testpro.easyrest.Core.Interface.InitialConfiguration;
 import com.testpro.easyrest.Util.JsonUtil;
 import com.testpro.easyrest.Util.ReportDetil;
@@ -22,7 +22,7 @@ import java.util.*;
 
 @Component
 @Slf4j
-public class RestAssuredImp extends AbctractRestAssuredExecut {
+public class RestAssuredImp extends AbctractRestAssuredExecute {
 
     /**
      * 请求工具类

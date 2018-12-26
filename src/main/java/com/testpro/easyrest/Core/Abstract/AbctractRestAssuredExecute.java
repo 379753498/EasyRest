@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 
 @Slf4j
-public abstract class AbctractRestAssuredExecut extends AbctractExcut <Response, ExecutionData> {
+public abstract class AbctractRestAssuredExecute extends AbctractExecute <Response, ExecutionData> {
     @Override
     public Response execut(ExecutionData executionData) {
         if (executionData.getUrl() == null) {
