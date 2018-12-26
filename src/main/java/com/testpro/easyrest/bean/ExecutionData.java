@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * 数据参数模型对象
+ */
 @Getter
 @Setter
 @ToString

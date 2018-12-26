@@ -2,9 +2,11 @@ package com.testpro.easyrest.Core.Abstract;
 
 import com.testpro.easyrest.Core.Interface.InterfaceDataProvider;
 import com.testpro.easyrest.Enum.DataType;
-
 import java.util.Iterator;
 
+/**
+ * 抽象实现数据提供接口
+ */
 public abstract class AbstractExcelInterfaceData implements InterfaceDataProvider <Object> {
 
     private String filepath;

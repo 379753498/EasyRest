@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
+/**
+ *初始化config配置接口实现
+ */
 public class InitialConfigurationImp implements InitialConfiguration {
 
     @Autowired

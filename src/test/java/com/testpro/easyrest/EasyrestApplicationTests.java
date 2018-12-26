@@ -1,7 +1,7 @@
 package com.testpro.easyrest;
 
 import com.testpro.easyrest.Core.Interface.InterfaceDataProvider;
-import com.testpro.easyrest.Core.Interface.interfaceExecution;
+import com.testpro.easyrest.Core.Interface.InterfaceExecution;
 import com.testpro.easyrest.bean.ExecutionData;
 import io.qameta.allure.Step;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +20,10 @@ public class EasyrestApplicationTests extends AbstractTestNGSpringContextTests {
     InterfaceDataProvider interfaceDataProvider;
     // 执行驱动器
     @Autowired
-    interfaceExecution interfaceExecution;
+    InterfaceExecution interfaceExecution;
 
     @DataProvider(name = "getdata")
-    public Iterator<Object[]> getdata() {
+    public Iterator <Object[]> getdata() {
         return interfaceDataProvider.ImplementDataProvider();
     }
 
