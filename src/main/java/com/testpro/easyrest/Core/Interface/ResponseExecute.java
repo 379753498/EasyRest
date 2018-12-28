@@ -9,5 +9,5 @@ import com.testpro.easyrest.bean.ExecutionData;
  * @param <E>            执行请求的参数类型
  */
 public interface ResponseExecute<T, E extends ExecutionData> {
-    T execut(E data);
+    T executResponse(E data);
 }
