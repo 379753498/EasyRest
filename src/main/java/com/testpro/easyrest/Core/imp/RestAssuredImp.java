@@ -54,7 +54,7 @@ public class RestAssuredImp extends AbctractRestAssuredExecute {
         RequestSpecification requestSpecification = getRequestSpecification(data);
         switch (data.getMethod()) {
             case "get":
-                return RestAssured.given().spec(requestSpecification).log().everything(true).get(data.getUrl());
+                return RestAssured.given().spec(requestSpecification).get(data.getUrl());
             case "post":
                 return RestAssured.given().spec(requestSpecification).log().everything(true).post(data.getUrl());
             default:
@@ -66,7 +66,7 @@ public class RestAssuredImp extends AbctractRestAssuredExecute {
     @Override
     public void ExecutVerification(Response response, ExecutionData executionData) {
         ResponseSpecification specification = getResponseSpecification(executionData);
-        response.then().assertThat().spec(specification).log().everything(true);
+        response.then().assertThat().spec(specification);
     }
 
     private ResponseSpecification getResponseSpecification(ExecutionData executionData) {
