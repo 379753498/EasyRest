@@ -19,9 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.hamcrest.Matchers;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -41,30 +39,26 @@ public class RestAssuredImp extends AbctractRestAssuredExecute {
         //记录到测试报告
         String responseBody = response.asString();
         ReportDetil.respondBody(responseBody);
-        ExecutVerification(response,executionData);
-
-
+        //执行验证
+        ExecutVerification(response, executionData);
     }
 
 
     @Override
     public Response executResponse(ExecutionData data) {
-        String url = data.getUrl();
-        if (StrUtil.isEmpty(url)) {
-            throw new RuntimeException("Url不能为空");
-        }
+        return super.executResponse(data);
+    }
+
+    @Override
+    public Response execut(ExecutionData data) {
         RequestSpecification requestSpecification = getRequestSpecification(data);
-        if (!StrUtil.isEmpty(data.getMethod())) {
-            switch (data.getMethod()) {
-                case "get":
-                    return RestAssured.given().log().all().spec(requestSpecification).get(url);
-                case "post":
-                    return RestAssured.given().log().all().spec(requestSpecification).post(url);
-                default:
-                    throw new RuntimeException("暂时不支持其他方式");
-            }
-        } else {
-            throw new RuntimeException("方法参数不能为空");
+        switch (data.getMethod()) {
+            case "get":
+                return RestAssured.given().spec(requestSpecification).log().everything(true).get(data.getUrl());
+            case "post":
+                return RestAssured.given().spec(requestSpecification).log().everything(true).post(data.getUrl());
+            default:
+                throw new RuntimeException("暂时不支持其他方式");
         }
     }
 
@@ -72,7 +66,7 @@ public class RestAssuredImp extends AbctractRestAssuredExecute {
     @Override
     public void ExecutVerification(Response response, ExecutionData executionData) {
         ResponseSpecification specification = getResponseSpecification(executionData);
-        response.then().assertThat().spec(specification).log().all();
+        response.then().assertThat().spec(specification).log().everything(true);
     }
 
     private ResponseSpecification getResponseSpecification(ExecutionData executionData) {
@@ -82,22 +76,23 @@ public class RestAssuredImp extends AbctractRestAssuredExecute {
         }
         if (!StrUtil.isEmpty(executionData.getRetrunJsonPathCheck())) {
             Map map = JSON.parseObject(executionData.getRetrunJsonPathCheck(), Map.class);
-            Iterator iterator = map.keySet().iterator();
-            while (iterator.hasNext()) {
-                String key = (String) iterator.next();
+            for (Object o : map.keySet()) {
+                String key = (String) o;
                 String value = (String) map.get(key);
                 try {
-                    int i = Integer.parseInt(value);
-                    builder.expectBody(key, Matchers.is(i));
-                }
-                catch (Exception e)
-                {
+                    //识别是有小数点还是没有小数点的算法
+                    String[] split = StrUtil.split(value, ".");
+                    if (split.length > 1) {
+                        double val = Double.parseDouble(value);
+                        builder.expectBody(key, Matchers.is(val));
+                    } else {
+                        int val = Integer.parseInt(value);
+                        builder.expectBody(key, Matchers.is(val));
+                    }
+
+                } catch (Exception e) {
                     builder.expectBody(key, Matchers.equalTo(value));
                 }
-
-
-
-
             }
         }
         if (!StrUtil.isEmpty(executionData.getRetrunCharacterString())) {
@@ -106,9 +101,7 @@ public class RestAssuredImp extends AbctractRestAssuredExecute {
             for (String s : split) {
                 builder.expectBody(Matchers.containsString(s));
             }
-
         }
-
         return builder.build();
     }
 
@@ -124,14 +117,14 @@ public class RestAssuredImp extends AbctractRestAssuredExecute {
         if (!StringUtils.isEmpty(parameters)) {
             stringMap.put("参数列表", JsonUtil.FastStringtoMap(parameters));
         } else {
-            Map map = new HashMap();
+            Map<String,String> map = new HashMap<>();
             map.put("参数信息", "无");
             stringMap.put("参数列表", map);
         }
         if (headers != null) {
             stringMap.put("头信息", JsonUtil.FastStringtoMap(headers));
         } else {
-            Map map = new HashMap();
+            Map<String,String> map = new HashMap<>();
             map.put("头信息", "无");
             stringMap.put("头信息列表", map);
         }
@@ -142,11 +135,11 @@ public class RestAssuredImp extends AbctractRestAssuredExecute {
     private RequestSpecification getRequestSpecification(ExecutionData data) {
         RequestSpecBuilder builder = new RequestSpecBuilder();
         if (!StrUtil.isEmpty(data.getHeaders())) {
-            Map map = JSON.parseObject(data.getHeaders(), Map.class);
+            Map<String,String> map = JSON.parseObject(data.getHeaders(), Map.class);
             builder.addHeaders(map);
         }
         if (!StrUtil.isEmpty(data.getParameters())) {
-            Map map = JSON.parseObject(data.getParameters(), Map.class);
+            Map<String,String> map = JSON.parseObject(data.getParameters(), Map.class);
             builder.addParams(map);
         }
         return builder.build();

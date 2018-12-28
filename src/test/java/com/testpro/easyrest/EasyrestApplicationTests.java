@@ -29,7 +29,7 @@ public class EasyrestApplicationTests extends AbstractTestNGSpringContextTests {
 
     @Test(testName = "esayrestTests", dataProvider = "getdata")
     @Step("测试用例名称：{executionData.caseDescription}")
-    public void contextLoads(ExecutionData executionData) {
+    public void EasyRestApplicationContext(ExecutionData executionData) {
         interfaceExecution.execution(executionData);
     }
 
