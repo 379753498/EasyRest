@@ -13,6 +13,7 @@ public abstract class AbstractExcelInterfaceData implements InterfaceDataProvide
      * 文件路径
      */
     private String filepath;
+
     @Override
     public DataType DatasourceName() {
         return DataType.Excel;

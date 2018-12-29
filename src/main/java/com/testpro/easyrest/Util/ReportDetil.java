@@ -16,7 +16,7 @@ public class ReportDetil {
     @Attachment("响应报文")
     public static String respondBody(String respondBody) {
         //报告展现响应报文
-        return JsonUtil.JsonPretty(respondBody);
+        return respondBody;
     }
 
 }
