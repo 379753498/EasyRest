@@ -19,11 +19,7 @@
     </properties>
 
     <dependencies>
-        <!--Aop-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
+
         <!--lombok-->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -36,12 +32,7 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--Config-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
-        </dependency>
+
         <!--Allure-->
         <dependency>
             <groupId>io.qameta.allure</groupId>
@@ -99,11 +90,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
@@ -113,72 +99,20 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
-
-            <!-- mvn test生成xml txt测试报告（命令行不带surefire-report:report时） -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <!-- 忽略单元测试中的错误继续构建工程 -->
-                    <testFailureIgnore>true</testFailureIgnore>
-                    <!--是否跳过测试工作 -->
-                    <skipTests>false</skipTests>
-                    <suiteXmlFiles>${basedir}/target/test-classes/testng.xml</suiteXmlFiles>
-                    <argLine>
-                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
-                    </argLine>
-                    <systemProperties>
-                        <!-- 生成报告的位置配置成target/allureResults文件目录可以更改 -->
-                        <property>
-                            <name>allure.results.directory</name>
-                            <value>${project.build.directory}/allure-results</value>
-                        </property>
-                    </systemProperties>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.aspectj</groupId>
-                        <artifactId>aspectjweaver</artifactId>
-                        <version>${aspectj.version}</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.0.2</version>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
                 <executions>
                     <execution>
-                        <id>copy-dependencies</id>
-                        <phase>compile</phase>
+                        <id>attach-sources</id>
+                        <phase>verify</phase>
                         <goals>
-                            <goal>analyze-report</goal>
+                            <goal>jar-no-fork</goal>
                         </goals>
-                    </execution>
-                    <execution>
-                        <id>copy-System</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <markersDirectory>${project.build.directory}/surefire-reports/</markersDirectory>
-                            <outputDirectory>${project.build.directory}/surefire-reports/</outputDirectory>
-                            <includeScope>system</includeScope>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
-
-            <!--maven插件可以测试完毕查看测试报告插件 -->
-            <plugin>
-                <groupId>io.qameta.allure</groupId>
-                <artifactId>allure-maven</artifactId>
-                <version>2.8</version>
-            </plugin>
-
-
         </plugins>
     </build>
 

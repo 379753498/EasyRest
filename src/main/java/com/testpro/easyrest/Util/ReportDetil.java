@@ -13,20 +13,11 @@ public class ReportDetil {
         return requestInfo;
     }
 
-
     @Attachment("响应报文")
     public static String respondBody(String respondBody) {
         //报告展现响应报文
         return JsonUtil.JsonPretty(respondBody);
     }
-
-
-    @Attachment("响应报文包含断言结果")
-    public static String ResponseCharacterString(String assertResult) {
-
-        return assertResult;
-    }
-
 
 }
 

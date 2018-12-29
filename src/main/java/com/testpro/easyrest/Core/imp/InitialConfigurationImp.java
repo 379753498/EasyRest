@@ -8,12 +8,10 @@ import io.restassured.RestAssured;
 import io.restassured.config.LogConfig;
 import io.restassured.config.RestAssuredConfig;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Properties;
 
-@Component
 @Slf4j
 /**
  *初始化config配置接口实现

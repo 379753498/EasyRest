@@ -6,12 +6,11 @@ import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.metadata.BaseRowModel;
 import com.alibaba.excel.metadata.Sheet;
 import com.alibaba.excel.support.ExcelTypeEnum;
-import org.springframework.stereotype.Component;
+
 
 import java.io.*;
 import java.util.List;
 
-@Component
 public class ExcelUtil {
 
     /**

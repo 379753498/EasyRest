@@ -17,15 +17,14 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import lombok.extern.slf4j.Slf4j;
 import org.hamcrest.Matchers;
-import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-@Component
 @Slf4j
 public class RestAssuredImp extends AbctractRestAssuredExecute {
+
+
 
     @Override
     public void execution(ExecutionData executionData) {
@@ -50,13 +49,13 @@ public class RestAssuredImp extends AbctractRestAssuredExecute {
     }
 
     @Override
-    public Response execut(ExecutionData data) {
+    protected Response execut(ExecutionData data) {
         RequestSpecification requestSpecification = getRequestSpecification(data);
         switch (data.getMethod()) {
             case "get":
                 return RestAssured.given().spec(requestSpecification).get(data.getUrl());
             case "post":
-                return RestAssured.given().spec(requestSpecification).log().everything(true).post(data.getUrl());
+                return RestAssured.given().spec(requestSpecification).post(data.getUrl());
             default:
                 throw new RuntimeException("暂时不支持其他方式");
         }
@@ -114,7 +113,7 @@ public class RestAssuredImp extends AbctractRestAssuredExecute {
         String url = executionData.getUrl();
         stringMap.put("URL", url);
         stringMap.put("Method", method);
-        if (!StringUtils.isEmpty(parameters)) {
+        if (!StrUtil.isEmpty(parameters)) {
             stringMap.put("参数列表", JsonUtil.FastStringtoMap(parameters));
         } else {
             Map<String,String> map = new HashMap<>();

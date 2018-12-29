@@ -24,7 +24,7 @@ public abstract class AbctractRestAssuredExecute extends AbctractExecute<Respons
         }
     }
 
-    public abstract Response execut(ExecutionData data);
+    protected abstract Response execut(ExecutionData data);
 }
 
 
