@@ -5,6 +5,17 @@
 easyrest 是一个由数据驱动自动化接口测试框架，
 可以自动执行并生成报告。
 自动化测试技术交流QQ群：31043004
+
+maven坐标
+```
+<dependency>
+    <groupId>com.github.379753498</groupId>
+    <artifactId>EasyRest</artifactId>
+    <version>1.1.0</version>
+</dependency>
+```
+
+
 #### 测试报告效果
 ![报告效果图1](https://images.gitee.com/uploads/images/2018/1223/205752_f9b01490_963880.png "ps1.png")
 ![报告效果图2](https://images.gitee.com/uploads/images/2018/1223/205828_71952b83_963880.png "ps2.png")
@@ -18,6 +29,20 @@ easyrest 是一个由数据驱动自动化接口测试框架，
 
 
 #### 安装教程
+
+若您想将功能集成到您的项目中，可引用maven依赖使用核心jar以便于快速使用该框架，其中实例项目在https://gitee.com/testdevops/easyrest/tree/SpringBootDemo
+
+``
+
+```
+<dependency>
+    <groupId>com.github.379753498</groupId>
+    <artifactId>EasyRest</artifactId>
+    <version>1.1.0</version>
+</dependency>
+```
+
+若您想详细了解框架如何运行的细节您可以这样做
 
 1. 配置Java1.8、maven3.5.4环境、ecplise Idea 需安装插件 lombok、TestNg插件
 2. 下载代码
