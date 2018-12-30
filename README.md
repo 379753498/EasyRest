@@ -30,7 +30,7 @@ maven坐标
 
 #### 安装教程
 
-若您想将功能集成到您的项目中，可引用maven依赖使用核心jar以便于快速使用该框架，其中实例项目在https://gitee.com/testdevops/easyrest/tree/SpringBootDemo
+若您想将功能集成到您的项目中，可引用maven依赖使用核心jar以便于快速使用该框架，其中实例项目在https://gitee.com/testdevops/easyrest/tree/master/SpringBootDemo
 
 ``
 
