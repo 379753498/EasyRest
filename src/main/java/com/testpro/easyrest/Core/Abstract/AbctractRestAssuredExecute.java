@@ -33,7 +33,7 @@ public abstract class AbctractRestAssuredExecute extends AbctractExecute<Respons
         String retrunCharacterString = executionData.getRetrunCharacterString();
         String contentType = response.getContentType();
 
-        if (ContentType.JSON.getValue().equals(contentType)) {
+        if (contentType.contains(ContentType.JSON.getValue())) {
             if (!StrUtil.isEmpty(retrunvauleCheck) || !StrUtil.isEmpty(retrunJsonPathCheck) || !StrUtil.isEmpty(retrunCharacterString)) {
                 ExecutVerification(response, executionData);
             }
