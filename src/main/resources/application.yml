@@ -1,0 +1,32 @@
+tests:
+  caseName: "测试用例一号"
+  caseDescription: "一号测试"
+  reuqest:
+    url: "https://www.apiopen.top/login"
+    headers:
+      Content-Type: "application/json"
+      charset: "utf-8"
+    parameters:
+      key: "00d91e8e0cca2b76f515926a36db68f5"
+      phone: "13594347817"
+      passwd: "123456"
+    method: "get"
+  respones:
+    retruntype: "json"
+    retrunvauleCheck:
+      code: 200
+      msg: "成功!"
+      data:
+        key: "00d91e8e0cca2b76f515926a36db68f5"
+        phone: "13594347817"
+        name: "peakchao"
+        passwd: "123456"
+        text: "这是鬼签名。"
+        img: "https://res.apiopen.top/2018031820405521.key.png"
+        other: "这是我的备注信息1"
+        other2: "这是我的备注信息2"
+        createTime: "2018-03-18 20:40:55"
+    retrunJsonPathCheck:
+      code: "210"
+      data.key: "hello"
+    retrunCharacterString: 	123456,失败!
