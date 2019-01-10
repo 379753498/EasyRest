@@ -1,6 +1,7 @@
 package com.testpro.easyrest;
 
 
+import com.testpro.easyrest.Core.imp.InterfaceExecutionProxy;
 import com.testpro.easyrest.Core.imp.RestAssuredImp;
 import com.testpro.easyrest.Data.ExcelInterfaceDataProd;
 import com.testpro.easyrest.bean.ExecutionData;
@@ -13,6 +14,11 @@ import java.util.Iterator;
 public class EasyrestApplicationTests  {
 
 
+   private InterfaceExecutionProxy <ExecutionData> executionimp;
+
+    public EasyrestApplicationTests() {
+        executionimp = new InterfaceExecutionProxy <>(new RestAssuredImp());
+    }
 
     @DataProvider(name = "getdata")
     public Iterator <Object[]> getdata() {
@@ -22,7 +28,7 @@ public class EasyrestApplicationTests  {
     @Test(testName = "esayrestTests", dataProvider = "getdata")
     @Step("测试用例名称：{executionData.caseDescription}")
     public void EasyRestApplicationContext(ExecutionData executionData) {
-        new RestAssuredImp().execution(executionData);
+        executionimp.execution(executionData);
     }
 
 }
