@@ -12,9 +12,9 @@ import lombok.extern.slf4j.Slf4j;
  */
 
 @Slf4j
-public abstract class AbctractRestAssuredExecute extends AbctractExecute<Response, ExecutionData> {
+public abstract class AbctractRestAssuredExecute extends AbctractExecute <Response, ExecutionData> {
 
-
+    //总执行接口聚合其他接口功能
     public void execution(ExecutionData executionData) {
         //初始化配置
         InitConfiguration();
@@ -24,10 +24,8 @@ public abstract class AbctractRestAssuredExecute extends AbctractExecute<Respons
         Response response = executResponse(executionData);
         //记录到测试报告
         String responseBody = response.asString();
-        log.info("请求执行完成返回值{}，总耗时{}", responseBody, response.getTime());
-
+        log.info("请求执行完成返回值{}，总耗时{}" , responseBody , response.getTime());
         ReportDetil.respondBody(responseBody);
-        //执行验证
         String retrunvauleCheck = executionData.getRetrunvauleCheck();
         String retrunJsonPathCheck = executionData.getRetrunJsonPathCheck();
         String retrunCharacterString = executionData.getRetrunCharacterString();
@@ -35,19 +33,15 @@ public abstract class AbctractRestAssuredExecute extends AbctractExecute<Respons
 
         if (contentType.contains(ContentType.JSON.getValue())) {
             if (!StrUtil.isEmpty(retrunvauleCheck) || !StrUtil.isEmpty(retrunJsonPathCheck) || !StrUtil.isEmpty(retrunCharacterString)) {
-                ExecutVerification(response, executionData);
+                //执行验证
+                ExecutVerification(response , executionData);
             }
         } else {
-            log.warn("暂不支持返回值非{}的数据格式校验功能", ContentType.JSON.getValue());
+            log.warn("暂不支持返回值非{}的数据格式校验功能" , ContentType.JSON.getValue());
         }
     }
 
-    protected abstract void InitConfiguration();
-
-    protected abstract String rquestbodyData(ExecutionData executionData);
-
-    public abstract void ExecutVerification(Response response, ExecutionData executionData);
-
+    //执行请求并返回Response对象
     public Response executResponse(ExecutionData data) {
         String url = data.getUrl();
         if (StrUtil.isEmpty(url)) {
@@ -59,7 +53,24 @@ public abstract class AbctractRestAssuredExecute extends AbctractExecute<Respons
         }
     }
 
+    public void ExecutVerification(Response response , ExecutionData executionData) {
+        RestAssuredExecutVerification(response , executionData);
+    }
+
+
+    //初始化配置
+    protected abstract void InitConfiguration();
+
+    //拼凑报告的请求参数相关信息
+    protected abstract String rquestbodyData(ExecutionData executionData);
+
+    //执行请求并返回Response对象
     protected abstract Response execut(ExecutionData data);
+
+    //执行验证过程
+    protected abstract void RestAssuredExecutVerification(Response response , ExecutionData executionData);
+
+
 }
 
 

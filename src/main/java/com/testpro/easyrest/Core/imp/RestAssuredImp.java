@@ -24,12 +24,9 @@ import java.util.Map;
 @Slf4j
 public class RestAssuredImp extends AbctractRestAssuredExecute {
 
-
-    @Override
-    public void execution(ExecutionData executionData) {
-        super.execution(executionData);
-    }
-
+    /**
+     * 执行初始化配置操作
+     */
     @Override
     protected void InitConfiguration() {
         InitialConfiguration configuration = new InitialConfigurationImp();
@@ -37,12 +34,11 @@ public class RestAssuredImp extends AbctractRestAssuredExecute {
         log.info("初始化配置完成");
     }
 
-
-    @Override
-    public Response executResponse(ExecutionData data) {
-        return super.executResponse(data);
-    }
-
+    /**
+     * 根据执行参数进行执行请求返回Response 对象
+     * @param data
+     * @return
+     */
     @Override
     protected Response execut(ExecutionData data) {
         RequestSpecification requestSpecification = getRequestSpecification(data);
@@ -56,14 +52,75 @@ public class RestAssuredImp extends AbctractRestAssuredExecute {
         }
     }
 
-
+    /**
+     *   执行验证工作
+     * @param response
+     * @param executionData
+     */
     @Override
-    public void ExecutVerification(Response response , ExecutionData executionData) {
+    protected void RestAssuredExecutVerification(Response response , ExecutionData executionData) {
         ResponseSpecification specification = getResponseSpecification(executionData);
         response.then().assertThat().spec(specification);
         log.info("验证工作执行完成");
     }
 
+
+    /**
+     *  根据请求的信息 拼出请求的Json信息
+     * @param executionData
+     * @return
+     */
+    protected String rquestbodyData(ExecutionData executionData) {
+        LinkedHashMap <String, Object> stringMap = new LinkedHashMap <>();
+        String returntype = executionData.getRetruntype();
+        String method = executionData.getMethod();
+        String headers = executionData.getHeaders();
+        String parameters = executionData.getParameters();
+        String url = executionData.getUrl();
+        stringMap.put("URL" , url);
+        stringMap.put("Method" , method);
+        if (!StrUtil.isEmpty(parameters)) {
+            stringMap.put("参数列表" , JsonUtil.FastStringtoMap(parameters));
+        } else {
+            Map <String, String> map = new HashMap <>();
+            map.put("参数信息" , "无");
+            stringMap.put("参数列表" , map);
+        }
+        if (headers != null) {
+            stringMap.put("头信息" , JsonUtil.FastStringtoMap(headers));
+        } else {
+            Map <String, String> map = new HashMap <>();
+            map.put("头信息" , "无");
+            stringMap.put("头信息列表" , map);
+        }
+        stringMap.put("返回类型" , returntype);
+        return JSONUtil.parseFromMap(stringMap).toStringPretty();
+    }
+
+    /**
+     *  根据请求参数拼出请求参数信息
+     * @param data
+     * @return 请求参数对象
+     */
+    private RequestSpecification getRequestSpecification(ExecutionData data) {
+        RequestSpecBuilder builder = new RequestSpecBuilder();
+        if (!StrUtil.isEmpty(data.getHeaders())) {
+            Map <String, String> map = JSON.parseObject(data.getHeaders() , Map.class);
+            builder.addHeaders(map);
+        }
+        if (!StrUtil.isEmpty(data.getParameters())) {
+            Map <String, String> map = JSON.parseObject(data.getParameters() , Map.class);
+            builder.addParams(map);
+        }
+        return builder.build();
+    }
+
+
+    /**
+     *   根据返回值验证信息进行组装返回值验证信息对象
+     * @param executionData
+     * @return返回值验证信息对象
+     */
     private ResponseSpecification getResponseSpecification(ExecutionData executionData) {
         ResponseSpecBuilder builder = new ResponseSpecBuilder();
         if (!StrUtil.isEmpty(executionData.getRetrunvauleCheck())) {
@@ -100,43 +157,4 @@ public class RestAssuredImp extends AbctractRestAssuredExecute {
         return builder.build();
     }
 
-    protected String rquestbodyData(ExecutionData executionData) {
-        LinkedHashMap <String, Object> stringMap = new LinkedHashMap <>();
-        String returntype = executionData.getRetruntype();
-        String method = executionData.getMethod();
-        String headers = executionData.getHeaders();
-        String parameters = executionData.getParameters();
-        String url = executionData.getUrl();
-        stringMap.put("URL" , url);
-        stringMap.put("Method" , method);
-        if (!StrUtil.isEmpty(parameters)) {
-            stringMap.put("参数列表" , JsonUtil.FastStringtoMap(parameters));
-        } else {
-            Map <String, String> map = new HashMap <>();
-            map.put("参数信息" , "无");
-            stringMap.put("参数列表" , map);
-        }
-        if (headers != null) {
-            stringMap.put("头信息" , JsonUtil.FastStringtoMap(headers));
-        } else {
-            Map <String, String> map = new HashMap <>();
-            map.put("头信息" , "无");
-            stringMap.put("头信息列表" , map);
-        }
-        stringMap.put("返回类型" , returntype);
-        return JSONUtil.parseFromMap(stringMap).toStringPretty();
-    }
-
-    private RequestSpecification getRequestSpecification(ExecutionData data) {
-        RequestSpecBuilder builder = new RequestSpecBuilder();
-        if (!StrUtil.isEmpty(data.getHeaders())) {
-            Map <String, String> map = JSON.parseObject(data.getHeaders() , Map.class);
-            builder.addHeaders(map);
-        }
-        if (!StrUtil.isEmpty(data.getParameters())) {
-            Map <String, String> map = JSON.parseObject(data.getParameters() , Map.class);
-            builder.addParams(map);
-        }
-        return builder.build();
-    }
 }
