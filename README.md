@@ -11,7 +11,7 @@ maven坐标
 <dependency>
     <groupId>com.github.379753498</groupId>
     <artifactId>EasyRest</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
 </dependency>
 ```
 
