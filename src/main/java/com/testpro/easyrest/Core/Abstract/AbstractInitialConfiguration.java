@@ -23,26 +23,24 @@ public abstract class AbstractInitialConfiguration implements InitialConfigurati
         //场景一 剥离数据驱动场景 用户
         if (StrUtil.isEmpty(property)) {
             EasyRestConfig.initglobalConfigSetting();
-            if (!StrUtil.isEmpty(EasyRestConfig.getBaseurl())) {
-                GlobalBaseUrlSetting(EasyRestConfig.getBaseurl());
-            } else if (!StrUtil.isEmpty(EasyRestConfig.getLog())) {
-                GlobalLogSetting(EasyRestConfig.getLog());
-            }
-            System.setProperty("easyrest.restassured.init" , EasyRestConfig.initGlobal);
+            this.GlobalSetting();
 
             log.info("场景一 剥离数据驱动场景 用户");
         }
         //场景二 数据驱动场景用户
         else if (property.equals(EasyRestConfig.initFile)) {
             log.info("场景二 数据驱动场景用户");
-            if (!StrUtil.isEmpty(EasyRestConfig.getBaseurl())) {
-                GlobalBaseUrlSetting(EasyRestConfig.getBaseurl());
-            } else if (!StrUtil.isEmpty(EasyRestConfig.getLog())) {
-                GlobalLogSetting(EasyRestConfig.getLog());
-            }
-
-            System.setProperty("easyrest.restassured.init" , EasyRestConfig.initGlobal);
+            this.GlobalSetting();
         }
+    }
+
+    private void GlobalSetting() {
+        if (!StrUtil.isEmpty(EasyRestConfig.getBaseurl())) {
+            GlobalBaseUrlSetting(EasyRestConfig.getBaseurl());
+        } else if (!StrUtil.isEmpty(EasyRestConfig.getLog())) {
+            GlobalLogSetting(EasyRestConfig.getLog());
+        }
+        System.setProperty("easyrest.restassured.init" , EasyRestConfig.initGlobal);
     }
 
     protected abstract void GlobalLogSetting(String log);
