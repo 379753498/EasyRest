@@ -24,7 +24,6 @@ public abstract class AbstractInitialConfiguration implements InitialConfigurati
         if (StrUtil.isEmpty(property)) {
             EasyRestConfig.initglobalConfigSetting();
             this.GlobalSetting();
-
             log.info("场景一 剥离数据驱动场景 用户");
         }
         //场景二 数据驱动场景用户
