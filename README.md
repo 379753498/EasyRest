@@ -41,7 +41,7 @@ maven坐标
 <dependency>
     <groupId>com.github.379753498</groupId>
     <artifactId>EasyRest</artifactId>
-    <version>1.1.0</version>
+    <version>1.3.0</version>
 </dependency>
 ```
 
@@ -91,3 +91,7 @@ maven坐标
 2. 新建 Feat_xxx 分支
 3. 提交代码
 4. 新建 Pull Request
+新增需求：
+接口依赖问题 B接口依赖A接口返回的某项数据进行依赖
+解决思路： 设计依赖接口数据关系及数据格式 自动进行封装填充A response 返回值到B request 对应位置中去
+实现考虑使用拦截器
