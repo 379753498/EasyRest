@@ -24,8 +24,6 @@ public abstract class AbctractRestAssuredExecute extends AbctractExecute<Respons
         Response response = this.executResponse(executionData);
         //记录到测试报告
         String responseBody = response.asString();
-        log.info("请求执行完成返回值{}，总耗时{}", responseBody, response.getTime());
-        ReportDetil.respondBody(responseBody);
         String retrunvauleCheck = executionData.getRetrunvauleCheck();
         String retrunJsonPathCheck = executionData.getRetrunJsonPathCheck();
         String retrunCharacterString = executionData.getRetrunCharacterString();

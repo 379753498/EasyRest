@@ -17,6 +17,7 @@ import io.restassured.specification.ResponseSpecification;
 import lombok.extern.slf4j.Slf4j;
 import org.hamcrest.Matchers;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -103,6 +104,8 @@ public class RestAssuredImp extends AbctractRestAssuredExecute {
      * @return 请求参数对象
      */
     private RequestSpecification getRequestSpecification(ExecutionData data) {
+        System.out.println("ok1111");
+        System.out.println(new Date().getTime());
         RequestSpecBuilder builder = new RequestSpecBuilder();
         if (!StrUtil.isEmpty(data.getHeaders())) {
             Map <String, String> map = JSON.parseObject(data.getHeaders() , Map.class);
@@ -112,6 +115,8 @@ public class RestAssuredImp extends AbctractRestAssuredExecute {
             Map <String, String> map = JSON.parseObject(data.getParameters() , Map.class);
             builder.addParams(map);
         }
+
+//        builder.addCookie("cook","hello cook");
         return builder.build();
     }
 
