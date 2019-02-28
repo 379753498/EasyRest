@@ -44,9 +44,9 @@ public class RestAssuredImp extends AbctractRestAssuredExecute {
     protected Response execut(ExecutionData data) {
         RequestSpecification requestSpecification = getRequestSpecification(data);
         switch (data.getMethod()) {
-            case "get":
+            case "GET":
                 return RestAssured.given(requestSpecification).get(data.getUrl());
-            case "post":
+            case "POST":
                 return RestAssured.given(requestSpecification).post(data.getUrl());
             default:
                 throw new RuntimeException("暂时不支持其他方式");

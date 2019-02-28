@@ -8,6 +8,8 @@ import io.restassured.RestAssured;
 import io.restassured.config.LogConfig;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.filter.Filter;
+import io.restassured.filter.cookie.CookieFilter;
+import io.restassured.filter.session.SessionFilter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -36,10 +38,16 @@ public class InitialConfigurationImp extends AbstractInitialConfiguration {
             {
                 RestAssured.config = RestAssuredConfig.config().logConfig(LogConfig.logConfig().enableLoggingOfRequestAndResponseIfValidationFails());
             }
+            if (RestAssured.filters().size()>0)
+            {
+                System.out.println("a");
+            }
         //    声明缓存拦截器
             ArrayList<Filter> filters = new ArrayList<>();
             filters.add(new GlobalCacheFilter());
             filters.add( new LogFilter());
+            filters.add(new SessionFilter());
+            filters.add(new CookieFilter());
             RestAssured.filters(filters);
             log.info("加载日志配置配置easyrest.restassured.log=+{}" , Strlog);
         } else {
