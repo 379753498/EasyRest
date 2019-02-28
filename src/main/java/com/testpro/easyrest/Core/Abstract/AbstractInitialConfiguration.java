@@ -9,12 +9,14 @@ import lombok.extern.slf4j.Slf4j;
 public abstract class AbstractInitialConfiguration implements InitialConfiguration {
 
     /**
-     * property 三种状态 null initFile  init
-     * 第一种由数据驱动场景读取配置文件后 property initFile状态 此时不需要再次读取文件 但是需要初始化全局设置一次
+     * property 2种状态 null-initFile--->initGlobal
+     * 第一种由数据驱动场景AbstractInitialConfiguration读取配置文件后 property initFile状态
+     * 此时不需要再次读取文件 但是需要初始化全局设置一次
      * 此时代码会执行一次initGlobal 操作 此时property 从initFile 变成initGlobal
+     *
      * <p>
      * 第二种 剥离数据驱动场景
-     * 由java 构造对象时 property 参数为空
+     * 由java 构造对象时 property 参数为空  对象从null-->nitGlobal状态 这样就只会执行一次
      * 那么此时会初始化所有参数并进行initGlobal 操作 此时property从空变成initGlobal
      */
     @Override
