@@ -17,8 +17,6 @@ public class LogFilter implements OrderedFilter {
 
     @Override
     public Response filter(FilterableRequestSpecification requestSpec, FilterableResponseSpecification responseSpec, FilterContext ctx) {
-
-
         Response response = ctx.next(requestSpec, responseSpec);
         String responseBody = response.asString();
         log.info("请求执行完成返回值{}，总耗时{}", responseBody, response.getTime());

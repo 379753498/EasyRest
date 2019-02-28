@@ -1,10 +1,9 @@
 package com.testpro.easyrest.Core.Filter;
-import com.testpro.easyrest.Core.Cache.GlobalCache;
+import com.testpro.easyrest.Core.Cache.RequestCache;
+import com.testpro.easyrest.Core.Cache.ResponseCache;
 import io.restassured.filter.FilterContext;
 import io.restassured.filter.OrderedFilter;
-import io.restassured.http.Cookie;
 import io.restassured.http.Cookies;
-import io.restassured.http.Header;
 import io.restassured.http.Headers;
 import io.restassured.response.Response;
 import io.restassured.response.ResponseBody;
@@ -13,9 +12,7 @@ import io.restassured.specification.FilterableResponseSpecification;
 import io.restassured.specification.MultiPartSpecification;
 import io.restassured.specification.ProxySpecification;
 import lombok.extern.slf4j.Slf4j;
-
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -29,9 +26,6 @@ public class GlobalCacheFilter implements OrderedFilter {
 
     @Override
     public Response filter(FilterableRequestSpecification requestSpec, FilterableResponseSpecification responseSpec, FilterContext ctx) {
-//
-        System.out.println(new Date().getTime());
-        System.out.println("ok");
         Response response = ctx.next(requestSpec, responseSpec);
         setCacheWithRequest(requestSpec);
         setCacheWithResponse(response);
@@ -45,14 +39,22 @@ public class GlobalCacheFilter implements OrderedFilter {
     private void setCacheWithResponse(Response response) {
 
         String contentType = response.getContentType();
-        GlobalCache.ResponseContentType.put("ResponseContentType",contentType);
+        ResponseCache.CONTENT_TYPE.put(ResponseCache.ContentType,contentType);
 
-        Map<String, String> cookies = response.getCookies();
         ResponseBody body = response.getBody();
+        ResponseCache.BODY.put(ResponseCache.Body, body);
+
         Headers headers = response.getHeaders();
-        String sessionId = response.getSessionId();
+        ResponseCache.HEADERS.put(ResponseCache.Headers,headers);
+
+//        String sessionId = response.getSessionId();
+//        ResponseCache.SESSION_ID.put(ResponseCache.SessionId,sessionId);
 
         Cookies detailedCookies = response.getDetailedCookies();
+        ResponseCache.COOKIES.put(ResponseCache.Cookies,detailedCookies);
+
+        long time = response.getTime();
+        ResponseCache.TIME.put(ResponseCache.Time,time);
     }
 
     /**
@@ -62,44 +64,41 @@ public class GlobalCacheFilter implements OrderedFilter {
     private void setCacheWithRequest(FilterableRequestSpecification requestSpec) {
 
         String method = requestSpec.getMethod();
-        GlobalCache.method.put("method",method);
+        RequestCache.METHOD.put(RequestCache.method,method);
 
         Headers headers = requestSpec.getHeaders();
-        List<Header> headers1 = headers.asList();
-        Iterator<Header> iterator = headers1.iterator();
-        while (iterator.hasNext())
-        {
-            Header next = iterator.next();
-            GlobalCache.Headers.put(next.getName(),next.getValue());
-        }
-        Iterator<Cookie> iteratorCookie = requestSpec.getCookies().iterator();
-        while (iteratorCookie.hasNext())
-        {
-            Cookie next = iteratorCookie.next();
-            GlobalCache.Cookies.put(next.getName(),next.getValue());
-        }
+        RequestCache.HEADERS.put(RequestCache.Headers,headers);
+        Cookies cookies = requestSpec.getCookies();
+        RequestCache.COOKIES.put(RequestCache.Cookies,cookies);
+
         String uri = requestSpec.getBaseUri();
-        GlobalCache.URI.put("URI",uri);
+        RequestCache.URI.put(RequestCache.uri,uri);
 
         ProxySpecification proxySpecification = requestSpec.getProxySpecification();
-        GlobalCache.Proxy.put("Proxy",proxySpecification);
+        if(proxySpecification==null)
+        {
+
+        }else{
+            RequestCache.PROXY.put(RequestCache.Proxy,proxySpecification);
+        }
+
 
         Map<String, String> requestParams = requestSpec.getRequestParams();
-        GlobalCache.Requestparams.put("Requestparams",requestParams);
+        RequestCache.REQUEST_PARAMS.put(RequestCache.Requestparams,requestParams);
 
         Map<String, String> formParams = requestSpec.getFormParams();
-        GlobalCache.FormParams.put("FormParams",formParams);
+        RequestCache.FORM_PARAMS.put(RequestCache.FormParams,formParams);
 
         Map<String, String> pathParams = requestSpec.getPathParams();
-        GlobalCache.PathParams.put("PathParams",pathParams);
+        RequestCache.PATH_PARAMS.put(RequestCache.PathParams,pathParams);
 
         Map<String, String> queryParams = requestSpec.getQueryParams();
-        GlobalCache.QueryParams.put("queryParams",pathParams);
+        RequestCache.QUERY_PARAMS.put(RequestCache.QueryParams,pathParams);
 
         List<MultiPartSpecification> multiPartParams = requestSpec.getMultiPartParams();
-        GlobalCache.Multiparts.put("Multiparts",multiPartParams);
-        
-        Object body = requestSpec.getBody();
-        GlobalCache.Body.put("Body",body);
+        RequestCache.MULTIPARTS.put(RequestCache.Multiparts,multiPartParams);
+
+//        Object body = requestSpec.getBody();
+//        RequestCache.BODY.put(RequestCache.Body,body);
     }
 }
