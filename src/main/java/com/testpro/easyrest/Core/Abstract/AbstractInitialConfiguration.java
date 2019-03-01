@@ -24,15 +24,19 @@ public abstract class AbstractInitialConfiguration implements InitialConfigurati
         String property = System.getProperty("easyrest.restassured.init");
         //场景一 剥离数据驱动场景 用户
         if (StrUtil.isEmpty(property)) {
+            log.info("场景一 剥离数据驱动场景 用户");
             EasyRestConfig.initglobalConfigSetting();
             this.GlobalSetting();
-            log.info("场景一 剥离数据驱动场景 用户");
+            log.info("初始化{剥离数据驱动场景}配置完成");
         }
         //场景二 数据驱动场景用户
         else if (property.equals(EasyRestConfig.initFile)) {
             log.info("场景二 数据驱动场景用户");
             this.GlobalSetting();
+            log.info("初始化{数据驱动场景}配置完成");
+
         }
+
     }
 
     private void GlobalSetting() {

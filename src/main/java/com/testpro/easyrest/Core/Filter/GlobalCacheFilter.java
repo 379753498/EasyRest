@@ -3,6 +3,7 @@ import com.testpro.easyrest.Core.Cache.RequestCache;
 import com.testpro.easyrest.Core.Cache.ResponseCache;
 import io.restassured.filter.FilterContext;
 import io.restassured.filter.OrderedFilter;
+import io.restassured.http.Cookie;
 import io.restassured.http.Cookies;
 import io.restassured.http.Headers;
 import io.restassured.response.Response;
@@ -13,6 +14,7 @@ import io.restassured.specification.MultiPartSpecification;
 import io.restassured.specification.ProxySpecification;
 import lombok.extern.slf4j.Slf4j;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -69,6 +71,13 @@ public class GlobalCacheFilter implements OrderedFilter {
         Headers headers = requestSpec.getHeaders();
         RequestCache.HEADERS.put(RequestCache.Headers,headers);
         Cookies cookies = requestSpec.getCookies();
+        Iterator <Cookie> iterator = cookies.iterator();
+        while(iterator.hasNext())
+        {
+            Cookie next = iterator.next();
+            System.out.println(next.getName()+next.getValue());
+
+        }
         RequestCache.COOKIES.put(RequestCache.Cookies,cookies);
 
         String uri = requestSpec.getBaseUri();

@@ -34,6 +34,15 @@ public class ExecutionData extends BaseRowModel {
     private String retrunJsonPathCheck;
     @ExcelProperty(index = 9, value = "字符包含校验")
     private String retrunCharacterString;
-
+    /**
+     * 请填写true表示清楚 不填写表示延续
+     */
+    @ExcelProperty(index = 10, value = "是否清除Cookie")
+    private String cleanCoockie;
+    /**
+     * 请填写true表示清楚 不填写表示延续
+     */
+    @ExcelProperty(index = 11, value = "是否清除Session")
+    private String cleanSession;
 
 }

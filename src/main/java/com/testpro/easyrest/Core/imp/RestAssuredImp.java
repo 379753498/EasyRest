@@ -6,6 +6,7 @@ import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import com.testpro.easyrest.Core.Abstract.AbctractRestAssuredExecute;
 import com.testpro.easyrest.Core.Interface.InitialConfiguration;
+import com.testpro.easyrest.Enum.ContentType;
 import com.testpro.easyrest.Util.JsonUtil;
 import com.testpro.easyrest.bean.ExecutionData;
 import io.restassured.RestAssured;
@@ -17,13 +18,19 @@ import io.restassured.specification.ResponseSpecification;
 import lombok.extern.slf4j.Slf4j;
 import org.hamcrest.Matchers;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Slf4j
 public class RestAssuredImp extends AbctractRestAssuredExecute {
+
+    @Override
+    protected void initEnvironment(ExecutionData executionData) {
+        if (executionData.getCleanCoockie() != null) {
+            System.setProperty("easyrest.restassured.cookies" , executionData.getCleanCoockie());
+        }
+    }
 
     /**
      * 执行初始化配置操作
@@ -32,11 +39,11 @@ public class RestAssuredImp extends AbctractRestAssuredExecute {
     protected void InitConfiguration() {
         InitialConfiguration configuration = new InitialConfigurationImp();
         configuration.InitialConfiguration();
-        log.info("初始化配置完成");
     }
 
     /**
      * 根据执行参数进行执行请求返回Response 对象
+     *
      * @param data
      * @return
      */
@@ -54,20 +61,36 @@ public class RestAssuredImp extends AbctractRestAssuredExecute {
     }
 
     /**
-     *   执行验证工作
+     * 执行验证工作
+     *
      * @param response
      * @param executionData
      */
     @Override
     protected void RestAssuredExecutVerification(Response response , ExecutionData executionData) {
-        ResponseSpecification specification = getResponseSpecification(executionData);
-        response.then().assertThat().spec(specification);
-        log.info("验证工作执行完成");
+
+        String contentType = response.getContentType();
+        if (contentType.contains(ContentType.JSON.getValue())) {
+            String retrunvauleCheck = executionData.getRetrunvauleCheck();
+            String retrunJsonPathCheck = executionData.getRetrunJsonPathCheck();
+            String retrunCharacterString = executionData.getRetrunCharacterString();
+            if (!StrUtil.isEmpty(retrunvauleCheck) || !StrUtil.isEmpty(retrunJsonPathCheck) || !StrUtil.isEmpty(retrunCharacterString)) {
+                //执行验证
+                ResponseSpecification specification = getResponseSpecification(executionData);
+                response.then().assertThat().spec(specification);
+                log.info("验证工作执行完成");
+            }
+        } else {
+            log.warn("暂不支持返回值非{}的数据格式校验功能" , ContentType.JSON.getValue());
+        }
+
+
     }
 
 
     /**
-     *  根据请求的信息 拼出请求的Json信息
+     * 根据请求的信息 拼出请求的Json信息
+     *
      * @param executionData
      * @return
      */
@@ -99,13 +122,13 @@ public class RestAssuredImp extends AbctractRestAssuredExecute {
     }
 
     /**
-     *  根据请求参数拼出请求参数信息
+     * 根据请求参数拼出请求参数信息
+     *
      * @param data
      * @return 请求参数对象
      */
     private RequestSpecification getRequestSpecification(ExecutionData data) {
-        System.out.println("ok1111");
-        System.out.println(new Date().getTime());
+
         RequestSpecBuilder builder = new RequestSpecBuilder();
         if (!StrUtil.isEmpty(data.getHeaders())) {
             Map <String, String> map = JSON.parseObject(data.getHeaders() , Map.class);
@@ -122,7 +145,8 @@ public class RestAssuredImp extends AbctractRestAssuredExecute {
 
 
     /**
-     *   根据返回值验证信息进行组装返回值验证信息对象
+     * 根据返回值验证信息进行组装返回值验证信息对象
+     *
      * @param executionData
      * @return返回值验证信息对象
      */

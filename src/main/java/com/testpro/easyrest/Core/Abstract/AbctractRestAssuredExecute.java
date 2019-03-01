@@ -1,6 +1,7 @@
 package com.testpro.easyrest.Core.Abstract;
 
 import cn.hutool.core.util.StrUtil;
+import com.testpro.easyrest.Config.EasyRestConfig;
 import com.testpro.easyrest.Enum.ContentType;
 import com.testpro.easyrest.Util.ReportDetil;
 import com.testpro.easyrest.bean.ExecutionData;
@@ -16,28 +17,20 @@ public abstract class AbctractRestAssuredExecute extends AbctractExecute<Respons
 
     //总执行接口聚合其他接口功能
     public void execution(ExecutionData executionData) {
+        //初始化定制化环境参数
+        this.initEnvironment(executionData);
         //初始化配置
         this.InitConfiguration();
         //打印请求报文
         ReportDetil.requestBody(this.rquestbodyData(executionData));
         //执行返回请求
         Response response = this.executResponse(executionData);
-        //记录到测试报告
-        String responseBody = response.asString();
-        String retrunvauleCheck = executionData.getRetrunvauleCheck();
-        String retrunJsonPathCheck = executionData.getRetrunJsonPathCheck();
-        String retrunCharacterString = executionData.getRetrunCharacterString();
-        String contentType = response.getContentType();
+        //执行验证
+        this.ExecutVerification(response, executionData);
 
-        if (contentType.contains(ContentType.JSON.getValue())) {
-            if (!StrUtil.isEmpty(retrunvauleCheck) || !StrUtil.isEmpty(retrunJsonPathCheck) || !StrUtil.isEmpty(retrunCharacterString)) {
-                //执行验证
-                this.ExecutVerification(response, executionData);
-            }
-        } else {
-            log.warn("暂不支持返回值非{}的数据格式校验功能", ContentType.JSON.getValue());
-        }
     }
+
+    protected abstract void initEnvironment(ExecutionData executionData);
 
     //执行请求并返回Response对象
     protected Response executResponse(ExecutionData data) {
