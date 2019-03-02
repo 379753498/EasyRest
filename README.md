@@ -5,13 +5,16 @@
 easyrest 是一个由数据驱动自动化接口测试框架，
 可以自动执行并生成报告。
 自动化测试技术交流QQ群：31043004
+
 ###近期更新（暂未发布）
 - 1、接口Session 和Cookies 自动延续 到下一个接口可用 只需登录一次
 - 2、后期如更换账号清除Session 和Cookies 配置ExecutionData.cleanCoockie=true
+
 ###计划增加功能
 -  1、支持${Request.Headers.参数名}引用变量。
 -  2、支持Xml验证、正则表达式验证方式。
 -  3、支持测试数据记录到Mysql 可配置是否写入。
+
 ### 能力有限 水平一般 欢迎批评指正 PR
 maven坐标
 ```
