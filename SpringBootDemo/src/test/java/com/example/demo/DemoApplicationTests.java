@@ -15,24 +15,19 @@ import java.util.Iterator;
 @SpringBootTest
 public class DemoApplicationTests extends AbstractTestNGSpringContextTests {
 
-    //数据发动机
-    @Autowired
-    InterfaceDataProvider interfaceDataProvider;
-    // 执行驱动器
-    @Autowired
-    InterfaceExecution interfaceExecution;
+  // 数据发动机
+  @Autowired InterfaceDataProvider<Object> interfaceDataProvider;
+  // 执行驱动器
+  @Autowired InterfaceExecution<ExecutionData> interfaceExecution;
 
-    @DataProvider(name = "getdata")
-    public Iterator<Object[]> getdata() {
-        return interfaceDataProvider.ImplementDataProvider();
-    }
+  @DataProvider(name = "getdata")
+  public Iterator<Object[]> getdata() {
+    return interfaceDataProvider.ImplementDataProvider();
+  }
 
-    @Test(testName = "esayrestTests", dataProvider = "getdata")
-    @Step("测试用例名称：{executionData.caseDescription}")
-    public void EasyRestApplicationContext(ExecutionData executionData) {
-        System.out.println(executionData);
-        interfaceExecution.execution(executionData);
-    }
-
+  @Test(testName = "esayrestTests", dataProvider = "getdata")
+  @Step("测试用例名称：{executionData.caseDescription}")
+  public void EasyRestApplicationContext(ExecutionData executionData) {
+    interfaceExecution.execution(executionData);
+  }
 }
-

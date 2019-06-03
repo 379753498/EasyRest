@@ -33,7 +33,35 @@ Issue和TestCaseId据说是可以集成bug管理系统的，没用过，所以�
    2. 通过测试挖掘出来的潜在需求。
 
 
-作者：时光不说话
-链接：https://www.jianshu.com/p/b5a6e902c9d4
-來源：简书
-简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。
+     <!-- mvn test生成xml txt测试报告（命令行不带surefire-report:report时） -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.20</version>
+                <configuration>
+                    <!-- 忽略单元测试中的错误继续构建工程 -->
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <!--是否跳过测试工作 -->
+                    <skipTests>false</skipTests>
+                    <suiteXmlFiles>${basedir}/target/test-classes/testng.xml</suiteXmlFiles>
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/1.8.10/aspectjweaver-1.8.10.jar"
+                    </argLine>
+                    <systemProperties>
+                        <!-- 生成报告的位置配置成target/allureResults文件目录可以更改 -->
+                        <property>
+                            <name>allure.results.directory</name>
+                            <value>${project.build.directory}/allure-results</value>
+                        </property>
+                    </systemProperties>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>1.8.10</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+

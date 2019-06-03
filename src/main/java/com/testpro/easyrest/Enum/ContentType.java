@@ -1,17 +1,16 @@
 package com.testpro.easyrest.Enum;
 
 public enum ContentType {
+  JSON("application/json"),
+  XML("application/xml ");
 
+  public String getValue() {
+    return value;
+  }
 
-    JSON("application/json"),XML("application/xml ");
+  private String value;
 
-    public String getValue() {
-        return value;
-    }
-
-    private String value;
-    private ContentType(String value) {
-        this.value = value;
-    }
-
+  ContentType(String value) {
+    this.value = value;
+  }
 }
